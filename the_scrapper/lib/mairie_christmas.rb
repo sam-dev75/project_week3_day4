@@ -11,7 +11,7 @@ def get_ville
   # Régister URL of the needed website
   page_url_region = "https://www.annuaire-des-mairies.com/val-d-oise.html"
 
-  region_page = Nokogiri::HTML(open(page_url_region))
+  region_page = Nokogiri::HTML(URI.open(page_url_region))
 
   # From the website, get an array of the city name, convert it to string, put in downcase and replace " " to "-" if any space
   return ville_name_array = region_page.xpath("//a[contains(@class, 'lientxt')]/text()").map {|x| x.to_s.downcase.gsub(" ", "-") }
@@ -29,7 +29,7 @@ def get_email (ville_names)
     # get each link to the depute
     page_url_ville = "https://www.annuaire-des-mairies.com/95/#{ville_names[n]}.html"
 
-    ville_page = Nokogiri::HTML(open(page_url_ville))
+    ville_page = Nokogiri::HTML(URI.open(page_url_ville))
 
     # If any bug when trying to get any email
     begin
